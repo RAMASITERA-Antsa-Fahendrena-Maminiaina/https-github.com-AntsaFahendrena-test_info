@@ -1,0 +1,63 @@
+print("Bonjour,ceci a été codé par RAMASITERA Antsa Fahendrena Maminiaina")
+
+from itertools import product
+
+def table_de_verite(fonction_logique):
+    variables = sorted(set([c for c in fonction_logique if c.isalpha()]))
+    nb_variables = len(variables)
+    
+    print("Table de vérité pour la fonction logique:", fonction_logique)
+    print("-" * (nb_variables * 4 + len(fonction_logique) + 8))
+    
+    # En-tête de la table
+    for var in variables:
+        print(var, end=" | ")
+    print("Résultat")
+    print("-" * (nb_variables * 4 + len(fonction_logique) + 8))
+    
+    # Corps de la table
+    for values in product([False, True], repeat=nb_variables):
+        variables_dict = dict(zip(variables, values))
+        result = eval(fonction_logique, variables_dict)
+        for value in values:
+            print(int(value), end=" " * 2 + "| ")
+        print(int(result))
+    print("-" * (nb_variables * 4 + len(fonction_logique) + 8))
+
+# Demande à l'utilisateur d'entrer la fonction logique
+fonction_logique = input("Entrez la fonction logique (utilisez les opérateurs logiques comme 'and', 'or', 'not', et les lettres pour les variables): ")
+
+# Affiche la table de vérité
+table_de_verite(fonction_logique)
+
+def forme_canonique(fonction_logique):
+    variables = sorted(set([c for c in fonction_logique if c.isalpha()]))
+    nb_variables = len(variables)
+    
+    # Première forme canonique
+    forme_canonique_1 = ""
+    for i, var in enumerate(variables):
+        forme_canonique_1 += "(" + var + " * " + f"{'not ' if i % 2 == 0 else ''}" + ")" + " + "
+    forme_canonique_1 = forme_canonique_1[:-3]  # Supprime le dernier " + "
+    
+    # Deuxième forme canonique
+    forme_canonique_2 = ""
+    for i, var in enumerate(variables):
+        forme_canonique_2 += "(" + f"{'not ' if i % 2 == 0 else ''}" + var + " + " + ")"
+    forme_canonique_2 = forme_canonique_2[:-3]  # Supprime le dernier " + "
+    
+    return forme_canonique_1, forme_canonique_2
+
+# Demande à l'utilisateur d'entrer la fonction logique
+fonction_logique = input("Veuillez reinsérer la fonction logique précédente (utilisez les opérateurs logiques comme 'and', 'or', 'not', et les lettres pour les variables): ")
+
+# Affiche les formes canoniques
+forme1, forme2 = forme_canonique(fonction_logique)
+print("Première forme canonique:", forme1)
+print("Deuxième forme canonique:", forme2)
+
+print("Merci,:)")
+
+
+
+
